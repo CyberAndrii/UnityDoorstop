@@ -1,6 +1,6 @@
 #!/bin/sh
 # Doorstop start script
-# 
+#
 # Run the script to start the game with Doorstop enabled
 #
 # There are two ways to use this script
@@ -131,7 +131,7 @@ abs_path() {
 }
 
 _readlink() {
-    # relative links with readlink (without -f) do not preserve the path info 
+    # relative links with readlink (without -f) do not preserve the path info
     ab_path="$(abs_path "$1")"
     link="$(readlink "${ab_path}")"
     case $link in
@@ -144,8 +144,8 @@ _readlink() {
 
 resolve_executable_path () {
     e_path="$(abs_path "$1")"
-    
-    while [ -L "${e_path}" ]; do 
+
+    while [ -L "${e_path}" ]; do
         e_path=$(_readlink "${e_path}");
     done
     echo "${e_path}"
@@ -155,23 +155,23 @@ resolve_executable_path () {
 executable_path=$(resolve_executable_path "${executable_path}")
 echo "${executable_path}"
 
-# Figure out the arch of the executable with file
-file_out="$(LD_PRELOAD="" file -b "${executable_path}")"
-case "${file_out}" in
-    *64-bit*)
-        arch="x64"
-    ;;
-    *32-bit*)
-        arch="x86"
-    ;;
-    *)
-        echo "The executable \"${executable_path}\" is not compiled for x86 or x64 (might be ARM?)"
-        echo "If you think this is a mistake (or would like to encourage support for other architectures)"
-        echo "Please make an issue at https://github.com/NeighTools/UnityDoorstop"
-        echo "Got: ${file_out}"
-        exit 1
-    ;;
-esac
+## Figure out the arch of the executable with file
+#file_out="$(LD_PRELOAD="" file -b "${executable_path}")"
+#case "${file_out}" in
+#    *64-bit*)
+#        arch="x64"
+#    ;;
+#    *32-bit*)
+#        arch="x86"
+#    ;;
+#    *)
+#        echo "The executable \"${executable_path}\" is not compiled for x86 or x64 (might be ARM?)"
+#        echo "If you think this is a mistake (or would like to encourage support for other architectures)"
+#        echo "Please make an issue at https://github.com/NeighTools/UnityDoorstop"
+#        echo "Got: ${file_out}"
+#        exit 1
+#    ;;
+#esac
 
 # Helper to convert common boolean strings into just 0 and 1
 doorstop_bool() {
